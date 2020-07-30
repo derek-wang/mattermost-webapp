@@ -1088,6 +1088,17 @@ export function setCaretPosition(input, pos) {
     setSelectionRange(input, pos, pos);
 }
 
+export function isValidPhoneNumber(phoneNumber) {
+    var error = '';
+    if (!phoneNumber) {
+        error = 'This field is required';
+    } else if (!(/^\d{3}-\d{3}-\d{4}$/).test(phoneNumber)) {
+        error = "Phone number format: 123-456-7890";
+    }
+
+    return error;
+}
+
 export function isValidUsername(name) {
     var error = '';
     if (!name) {

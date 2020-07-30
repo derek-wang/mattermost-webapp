@@ -162,6 +162,10 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: (<FormattedMessage id='signup_user_completed.required'/>),
                 passwordError: '',
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
             return false;
         }
@@ -172,6 +176,84 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: (<FormattedMessage id='signup_user_completed.validEmail'/>),
                 passwordError: '',
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
+            });
+            return false;
+        }
+
+
+        const providedFirstName = this.refs.first_name.value.trim().toLowerCase();
+        if (!providedFirstName) {
+            this.setState({
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+                serverError: '',
+                firstNameError: (<FormattedMessage id='signup_user_completed.required'/>),
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
+            });
+            return false;
+        }
+
+        const providedLastName = this.refs.last_name.value.trim().toLowerCase();
+        if (!providedLastName) {
+            this.setState({
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+                serverError: '',
+                firstNameError: '',
+                lastNameError: (<FormattedMessage id='signup_user_completed.required'/>),
+                mobileError: '',
+                titleError: ''
+            });
+            return false;
+        }
+
+        const providedMobile = this.refs.mobile.value.trim().toLowerCase();
+        const mobileError = Utils.isValidPhoneNumber(providedMobile);
+        if (!providedMobile) {
+            this.setState({
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+                serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: (<FormattedMessage id='signup_user_completed.required'/>),
+                titleError: ''
+            });
+            return false;
+        } else if(mobileError) {
+            this.setState({
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+                serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: 'Invalid phone number format',
+                titleError: ''
+            });
+            return false;
+        }
+
+        const provideTitle = this.refs.title.value.trim().toLowerCase();
+        if (!provideTitle) {
+            this.setState({
+                nameError: '',
+                emailError: '',
+                passwordError: '',
+                serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: (<FormattedMessage id='signup_user_completed.required'/>)
             });
             return false;
         }
@@ -183,6 +265,10 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: '',
                 passwordError: '',
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
             return false;
         }
@@ -194,6 +280,10 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: '',
                 passwordError: '',
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
             return false;
         } else if (usernameError) {
@@ -210,6 +300,10 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: '',
                 passwordError: '',
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
             return false;
         }
@@ -222,6 +316,10 @@ export default class SignupEmail extends React.PureComponent {
                 emailError: '',
                 passwordError: error,
                 serverError: '',
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
             return false;
         }
@@ -245,12 +343,20 @@ export default class SignupEmail extends React.PureComponent {
                 passwordError: '',
                 serverError: '',
                 isSubmitting: true,
+                firstNameError: '',
+                lastNameError: '',
+                mobileError: '',
+                titleError: ''
             });
 
             const user = {
                 email: this.refs.email.value.trim(),
                 username: this.refs.name.value.trim().toLowerCase(),
                 password: this.refs.password.value,
+                first_name: this.refs.first_name.value.trim(),
+                last_name: this.refs.last_name.value.trim(),
+                mobile_number: this.refs.mobile.value.trim(),
+                position: this.refs.title.value.trim(),
                 allow_marketing: true,
             };
 
@@ -309,6 +415,43 @@ export default class SignupEmail extends React.PureComponent {
             nameDivStyle += ' has-error';
         }
 
+        let firstNameDivStyle = 'form-group';
+        let firstNameError = null;
+        if (this.state.firstNameError) {
+            firstNameError = <label className='control-label'>{this.state.firstNameError}</label>;
+            firstNameDivStyle += ' has-error';
+        }
+
+        let lastNameDivStyle = 'form-group';
+        let lastNameError = null;
+        if (this.state.lastNameError) {
+            lastNameError = <label className='control-label'>{this.state.lastNameError}</label>;
+            lastNameDivStyle += ' has-error';
+        }
+
+        let mobileError = null;
+        let mobileHelpText = (
+            <span
+                id='valid_name'
+                className='help-block'
+            >
+                Phone number format: 123-456-7890
+            </span>
+        );
+        let mobileDivStyle = 'form-group';
+        if (this.state.mobileError) {
+            mobileError = <label className='control-label'>{this.state.mobileError}</label>;
+            mobileHelpText = '';
+            mobileDivStyle += ' has-error';
+        }
+
+        let titleDivStyle = 'form-group';
+        let titleError = null;
+        if (this.state.titleError) {
+            titleError = <label className='control-label'>{this.state.titleError}</label>;
+            titleDivStyle += ' has-error';
+        }
+
         let passwordError = null;
         let passwordDivStyle = 'form-group';
         if (this.state.passwordError) {
@@ -336,97 +479,188 @@ export default class SignupEmail extends React.PureComponent {
         }
 
         return (
-            <form>
-                <div className='inner__content'>
-                    <div className={emailContainerStyle}>
-                        <h5 id='email_label'>
-                            <strong>
-                                <FormattedMessage
-                                    id='signup_user_completed.whatis'
-                                    defaultMessage="What's your email address?"
+            <div>
+                <select
+                    className='form-control'
+                    value={this.props.value}
+                    onChange={this.props.onChange}
+                    id='dealerSelect'
+                >
+
+                </select>
+
+                <form>
+                    <div className='inner__content'>
+                        <div className={emailContainerStyle}>
+                            <h5 id='email_label'>
+                                <strong>
+                                    <FormattedMessage
+                                        id='signup_user_completed.whatis'
+                                        defaultMessage="What's your email address?"
+                                    />
+                                </strong>
+                            </h5>
+                            <div className={emailDivStyle}>
+                                <input
+                                    id='email'
+                                    type='email'
+                                    ref='email'
+                                    className='form-control'
+                                    defaultValue={this.state.email}
+                                    placeholder=''
+                                    maxLength='128'
+                                    autoFocus={true}
+                                    spellCheck='false'
+                                    autoCapitalize='off'
                                 />
-                            </strong>
-                        </h5>
-                        <div className={emailDivStyle}>
-                            <input
-                                id='email'
-                                type='email'
-                                ref='email'
-                                className='form-control'
-                                defaultValue={this.state.email}
-                                placeholder=''
-                                maxLength='128'
-                                autoFocus={true}
-                                spellCheck='false'
-                                autoCapitalize='off'
-                            />
-                            {emailError}
-                            {emailHelpText}
+                                {emailError}
+                                {emailHelpText}
+                            </div>
                         </div>
-                    </div>
-                    {yourEmailIs}
-                    <div className='mt-8'>
-                        <h5 id='name_label'>
-                            <strong>
-                                <FormattedMessage
-                                    id='signup_user_completed.chooseUser'
-                                    defaultMessage='Choose your username'
+                        {yourEmailIs}
+                        <div className='mt-8'>
+                            <h5 id='first_name_label'>
+                                <strong>
+                                    What's your first name
+                                </strong>
+                            </h5>
+                            <div className={firstNameDivStyle}>
+                                <input
+                                    id='first_name'
+                                    type='text'
+                                    ref='first_name'
+                                    className='form-control'
+                                    placeholder=''
+                                    maxLength={Constants.MAX_FIRSTNAME_LENGTH}
+                                    spellCheck='false'
+                                    autoCapitalize='off'
                                 />
-                            </strong>
-                        </h5>
-                        <div className={nameDivStyle}>
-                            <input
-                                id='name'
-                                type='text'
-                                ref='name'
-                                className='form-control'
-                                placeholder=''
-                                maxLength={Constants.MAX_USERNAME_LENGTH}
-                                spellCheck='false'
-                                autoCapitalize='off'
-                            />
-                            {nameError}
-                            {nameHelpText}
+                                {firstNameError}
+                            </div>
                         </div>
-                    </div>
-                    <div className='mt-8'>
-                        <h5 id='password_label'>
-                            <strong>
-                                <FormattedMessage
-                                    id='signup_user_completed.choosePwd'
-                                    defaultMessage='Choose your password'
+                        <div className='mt-8'>
+                            <h5 id='last_name_label'>
+                                <strong>
+                                    What's your last name
+                                </strong>
+                            </h5>
+                            <div className={lastNameDivStyle}>
+                                <input
+                                    id='last_name'
+                                    type='text'
+                                    ref='last_name'
+                                    className='form-control'
+                                    placeholder=''
+                                    maxLength={Constants.MAX_LASTNAME_LENGTH}
+                                    spellCheck='false'
+                                    autoCapitalize='off'
                                 />
-                            </strong>
-                        </h5>
-                        <div className={passwordDivStyle}>
-                            <input
-                                id='password'
-                                type='password'
-                                ref='password'
-                                className='form-control'
-                                placeholder=''
-                                maxLength='128'
-                                spellCheck='false'
-                            />
-                            {passwordError}
+                                {lastNameError}
+                            </div>
                         </div>
+                        <div className='mt-8'>
+                            <h5 id='mobile_label'>
+                                <strong>
+                                    What's your mobile number
+                                </strong>
+                            </h5>
+                            <div className={mobileDivStyle}>
+                                <input
+                                    id='mobile'
+                                    type='tel'
+                                    ref='mobile'
+                                    placeholder="123-456-7890"
+                                    className='form-control'
+                                    spellCheck='false'
+                                    autoCapitalize='off'
+                                />
+                                {mobileError}
+                                {mobileHelpText}
+                            </div>
+                        </div>
+                        <div className='mt-8'>
+                            <h5 id='title_label'>
+                                <strong>
+                                    What's your title
+                                </strong>
+                            </h5>
+                            <div className={titleDivStyle}>
+                                <input
+                                    id='title'
+                                    type='text'
+                                    ref='title'
+                                    className='form-control'
+                                    placeholder=''
+                                    maxLength={Constants.MAX_POSITION_LENGTH}
+                                    spellCheck='false'
+                                    autoCapitalize='off'
+                                />
+                                {titleError}
+                            </div>
+                        </div>
+                        <div className='mt-8'>
+                            <h5 id='name_label'>
+                                <strong>
+                                    <FormattedMessage
+                                        id='signup_user_completed.chooseUser'
+                                        defaultMessage='Choose your username'
+                                    />
+                                </strong>
+                            </h5>
+                            <div className={nameDivStyle}>
+                                <input
+                                    id='name'
+                                    type='text'
+                                    ref='name'
+                                    className='form-control'
+                                    placeholder=''
+                                    maxLength={Constants.MAX_USERNAME_LENGTH}
+                                    spellCheck='false'
+                                    autoCapitalize='off'
+                                />
+                                {nameError}
+                                {nameHelpText}
+                            </div>
+                        </div>
+                        <div className='mt-8'>
+                            <h5 id='password_label'>
+                                <strong>
+                                    <FormattedMessage
+                                        id='signup_user_completed.choosePwd'
+                                        defaultMessage='Choose your password'
+                                    />
+                                </strong>
+                            </h5>
+                            <div className={passwordDivStyle}>
+                                <input
+                                    id='password'
+                                    type='password'
+                                    ref='password'
+                                    className='form-control'
+                                    placeholder=''
+                                    maxLength='128'
+                                    spellCheck='false'
+                                />
+                                {passwordError}
+                            </div>
+                        </div>
+                        <p className='mt-5'>
+                            <button
+                                id='createAccountButton'
+                                type='submit'
+                                onClick={this.handleSubmit}
+                                className='btn-primary btn'
+                                disabled={this.state.isSubmitting}
+                            >
+                                <FormattedMessage
+                                    id='signup_user_completed.create'
+                                    defaultMessage='Create Account'
+                                />
+                            </button>
+                        </p>
                     </div>
-                    <p className='mt-5'>
-                        <button
-                            id='createAccountButton'
-                            type='submit'
-                            onClick={this.handleSubmit}
-                            className='btn-primary btn'
-                            disabled={this.state.isSubmitting}
-                        >
-                            <FormattedMessage
-                                id='signup_user_completed.create'
-                                defaultMessage='Create Account'
-                            />
-                        </button>
-                    </p>
-                </div>
-            </form>
+                </form>
+            </div>
         );
     }
 

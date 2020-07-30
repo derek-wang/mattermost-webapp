@@ -309,9 +309,9 @@ const AdminDefinition = {
         },
         team_detail: {
             url: 'user_management/teams/:team_id',
-            isHidden: it.either(
-                it.isnt(it.licensedForFeature('LDAPGroups')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensedForFeature('LDAPGroups')),
+            // ),
             schema: {
                 id: 'TeamDetail',
                 component: TeamDetails,
@@ -321,9 +321,9 @@ const AdminDefinition = {
             url: 'user_management/teams',
             title: t('admin.sidebar.teams'),
             title_default: 'Teams',
-            isHidden: it.either(
-                it.isnt(it.licensedForFeature('LDAPGroups')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensedForFeature('LDAPGroups')),
+            // ),
             schema: {
                 id: 'Teams',
                 component: TeamSettings,
@@ -331,9 +331,9 @@ const AdminDefinition = {
         },
         channel_detail: {
             url: 'user_management/channels/:channel_id',
-            isHidden: it.either(
-                it.isnt(it.licensedForFeature('LDAPGroups')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensedForFeature('LDAPGroups')),
+            // ),
             schema: {
                 id: 'ChannelDetail',
                 component: ChannelDetails,
@@ -343,9 +343,9 @@ const AdminDefinition = {
             url: 'user_management/channels',
             title: t('admin.sidebar.channels'),
             title_default: 'Channels',
-            isHidden: it.either(
-                it.isnt(it.licensedForFeature('LDAPGroups')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensedForFeature('LDAPGroups')),
+            // ),
             schema: {
                 id: 'Channels',
                 component: ChannelSettings,
@@ -353,7 +353,7 @@ const AdminDefinition = {
         },
         systemScheme: {
             url: 'user_management/permissions/system_scheme',
-            isHidden: it.isnt(it.licensed),
+            // isHidden: it.isnt(it.licensed),
             schema: {
                 id: 'PermissionSystemScheme',
                 component: PermissionSystemSchemeSettings,
@@ -361,10 +361,10 @@ const AdminDefinition = {
         },
         teamSchemeDetail: {
             url: 'user_management/permissions/team_override_scheme/:scheme_id',
-            isHidden: it.either(
-                it.isnt(it.licensed),
-                it.isnt(it.licensedForFeature('CustomPermissionsSchemes')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensed),
+            //     it.isnt(it.licensedForFeature('CustomPermissionsSchemes')),
+            // ),
             schema: {
                 id: 'PermissionSystemScheme',
                 component: PermissionTeamSchemeSettings,
@@ -372,10 +372,10 @@ const AdminDefinition = {
         },
         teamScheme: {
             url: 'user_management/permissions/team_override_scheme',
-            isHidden: it.either(
-                it.isnt(it.licensed),
-                it.isnt(it.licensedForFeature('CustomPermissionsSchemes')),
-            ),
+            // isHidden: it.either(
+            //     it.isnt(it.licensed),
+            //     it.isnt(it.licensedForFeature('CustomPermissionsSchemes')),
+            // ),
             schema: {
                 id: 'PermissionSystemScheme',
                 component: PermissionTeamSchemeSettings,
@@ -385,7 +385,7 @@ const AdminDefinition = {
             url: 'user_management/permissions/',
             title: t('admin.sidebar.permissions'),
             title_default: 'Permissions',
-            isHidden: it.isnt(it.licensed),
+            // isHidden: it.isnt(it.licensed),
             searchableStrings: [
                 'admin.permissions.documentationLinkText',
                 'admin.permissions.teamOverrideSchemesNoSchemes',
@@ -412,7 +412,7 @@ const AdminDefinition = {
             url: 'environment/web_server',
             title: t('admin.sidebar.webServer'),
             title_default: 'Web Server',
-            isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
+            // isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
             schema: {
                 id: 'ServiceSettings',
                 name: t('admin.environment.webServer'),
@@ -1601,7 +1601,7 @@ const AdminDefinition = {
                         help_text: t('admin.team.teamCreationDescription'),
                         help_text_default: 'When false, only System Administrators can create teams.',
                         permissions_mapping_name: 'enableTeamCreation',
-                        isHidden: it.licensed,
+                        // isHidden: it.licensed,
                     },
                     {
                         type: Constants.SettingsTypes.TYPE_NUMBER,
@@ -1675,7 +1675,7 @@ const AdminDefinition = {
                         label_default: 'Lock Teammate Name Display for all users: ',
                         help_text: t('admin.lockTeammateNameDisplayHelpText'),
                         help_text_default: 'When true, disables users\' ability to change settings under Main Menu > Account Settings > Display > Teammate Name Display.',
-                        isHidden: it.isnt(it.licensedForFeature('LockTeammateNameDisplay')),
+                        // isHidden: it.isnt(it.licensedForFeature('LockTeammateNameDisplay')),
                     },
                     {
                         type: Constants.SettingsTypes.TYPE_PERMISSION,
@@ -1685,7 +1685,7 @@ const AdminDefinition = {
                         help_text: t('admin.team.editOthersPostsDesc'),
                         help_text_default: 'When true, Team Administrators and System Administrators can edit other user\'s posts.  When false, only System Administrators can edit other user\'s posts.',
                         permissions_mapping_name: 'editOthersPosts',
-                        isHidden: it.licensed,
+                        // isHidden: it.licensed,
                     },
                     {
                         type: Constants.SettingsTypes.TYPE_BOOL,
@@ -1771,7 +1771,7 @@ const AdminDefinition = {
                         help_text: t('admin.environment.notifications.contents.help'),
                         help_text_default: '**Send full message contents** - Sender name and channel are included in email notifications. Typically used for compliance reasons if Mattermost contains confidential information and policy dictates it cannot be stored in email.\n  **Send generic description with only sender name** - Only the name of the person who sent the message, with no information about channel name or message contents are included in email notifications. Typically used for compliance reasons if Mattermost contains confidential information and policy dictates it cannot be stored in email.',
                         help_text_markdown: true,
-                        isHidden: it.isnt(it.licensedForFeature('EmailNotificationContents')),
+                        // isHidden: it.isnt(it.licensedForFeature('EmailNotificationContents')),
                         options: [
                             {
                                 value: 'full',
@@ -1838,7 +1838,7 @@ const AdminDefinition = {
                         help_text: t('admin.environment.notifications.pushContents.help'),
                         help_text_default: '**Generic description with only sender name** - Includes only the name of the person who sent the message in push notifications, with no information about channel name or message contents.\n **Generic description with sender and channel names** - Includes the name of the person who sent the message and the channel it was sent in, but not the message contents.\n **Full message content sent in the notification payload** - Includes the message contents in the push notification payload that is relayed through Apple\'s Push Notification Service (APNS) or Google\'s Firebase Cloud Messaging (FCM). It is **highly recommended** this option only be used with an "https" protocol to encrypt the connection and protect confidential information sent in messages.',
                         help_text_markdown: true,
-                        isHidden: it.licensedForFeature('IDLoadedPushNotifications'),
+                        // isHidden: it.licensedForFeature('IDLoadedPushNotifications'),
                         options: [
                             {
                                 value: 'generic_no_channel',
@@ -1865,7 +1865,7 @@ const AdminDefinition = {
                         help_text: t('admin.environment.notifications.pushContents.withIdLoaded.help'),
                         help_text_default: '**Generic description with only sender name** - Includes only the name of the person who sent the message in push notifications, with no information about channel name or message contents.\n **Generic description with sender and channel names** - Includes the name of the person who sent the message and the channel it was sent in, but not the message contents.\n **Full message content sent in the notification payload** - Includes the message contents in the push notification payload that is relayed through Apple\'s Push Notification Service (APNS) or Google\'s Firebase Cloud Messaging (FCM). It is **highly recommended** this option only be used with an "https" protocol to encrypt the connection and protect confidential information sent in messages.\n **Full message content fetched from the server on receipt** - The notification payload relayed through APNS or FCM contains no message content, instead it contains a unique message ID used to fetch message content from the server when a push notification is received by a device. If the server cannot be reached, a generic notification will be displayed.',
                         help_text_markdown: true,
-                        isHidden: it.isnt(it.licensedForFeature('IDLoadedPushNotifications')),
+                        // isHidden: it.isnt(it.licensedForFeature('IDLoadedPushNotifications')),
                         options: [
                             {
                                 value: 'generic_no_channel',
@@ -1896,7 +1896,7 @@ const AdminDefinition = {
             url: 'site_config/announcement_banner',
             title: t('admin.sidebar.announcement'),
             title_default: 'Announcement Banner',
-            isHidden: it.isnt(it.licensed),
+            // isHidden: it.isnt(it.licensed),
             schema: {
                 id: 'AnnouncementSettings',
                 name: t('admin.site.announcementBanner'),
@@ -4015,7 +4015,7 @@ const AdminDefinition = {
             url: 'compliance/data_retention',
             title: t('admin.sidebar.dataRetentionPolicy'),
             title_default: 'Data Retention Policy',
-            isHidden: it.isnt(it.licensedForFeature('DataRetention')),
+            // isHidden: it.isnt(it.licensedForFeature('DataRetention')),
             searchableStrings: [
                 'admin.data_retention.title',
                 'admin.data_retention.messageRetentionDays.description',
@@ -4039,7 +4039,7 @@ const AdminDefinition = {
             url: 'compliance/export',
             title: t('admin.sidebar.complianceExport'),
             title_default: 'Compliance Export (Beta)',
-            isHidden: it.isnt(it.licensedForFeature('MessageExport')),
+            // isHidden: it.isnt(it.licensedForFeature('MessageExport')),
             searchableStrings: [
                 'admin.service.complianceExportTitle',
                 'admin.service.complianceExportDesc',
@@ -4067,7 +4067,7 @@ const AdminDefinition = {
             url: 'compliance/monitoring',
             title: t('admin.sidebar.complianceMonitoring'),
             title_default: 'Compliance Monitoring',
-            isHidden: it.isnt(it.licensed),
+            // isHidden: it.isnt(it.licensed),
             searchableStrings: [
                 'admin.audits.title',
                 'admin.audits.reload',
@@ -4077,7 +4077,7 @@ const AdminDefinition = {
                 name: t('admin.compliance.complianceMonitoring'),
                 name_default: 'Compliance Monitoring',
                 component: Audits,
-                isHidden: it.isnt(it.licensedForFeature('Compliance')),
+                // isHidden: it.isnt(it.licensedForFeature('Compliance')),
                 settings: [
                     {
                         type: Constants.SettingsTypes.TYPE_BANNER,
@@ -4085,7 +4085,7 @@ const AdminDefinition = {
                         label_markdown: true,
                         label_default: 'This feature is replaced by a new [Compliance Export]({siteURL}/admin_console/compliance/export) feature, and will be removed in a future release. We recommend migrating to the new system.',
                         label_values: {siteURL: getSiteURL()},
-                        isHidden: it.isnt(it.licensedForFeature('Compliance')),
+                        // isHidden: it.isnt(it.licensedForFeature('Compliance')),
                         banner_type: 'info',
                     },
                     {
@@ -4096,7 +4096,7 @@ const AdminDefinition = {
                         help_text: t('admin.compliance.enableDesc'),
                         help_text_default: 'When true, Mattermost allows compliance reporting from the **Compliance and Auditing** tab. See [documentation](!https://docs.mattermost.com/administration/compliance.html) to learn more.',
                         help_text_markdown: true,
-                        isHidden: it.isnt(it.licensedForFeature('Compliance')),
+                        // isHidden: it.isnt(it.licensedForFeature('Compliance')),
                     },
                     {
                         type: Constants.SettingsTypes.TYPE_TEXT,
@@ -4108,7 +4108,7 @@ const AdminDefinition = {
                         placeholder: t('admin.compliance.directoryExample'),
                         placeholder_default: 'E.g.: "./data/"',
                         isDisabled: it.stateIsFalse('ComplianceSettings.Enable'),
-                        isHidden: it.isnt(it.licensedForFeature('Compliance')),
+                        // isHidden: it.isnt(it.licensedForFeature('Compliance')),
                     },
                     {
                         type: Constants.SettingsTypes.TYPE_BOOL,
@@ -4118,7 +4118,7 @@ const AdminDefinition = {
                         help_text: t('admin.compliance.enableDailyDesc'),
                         help_text_default: 'When true, Mattermost will generate a daily compliance report.',
                         isDisabled: it.stateIsFalse('ComplianceSettings.Enable'),
-                        isHidden: it.isnt(it.licensedForFeature('Compliance')),
+                        // isHidden: it.isnt(it.licensedForFeature('Compliance')),
                     },
                 ],
             },
@@ -4127,7 +4127,7 @@ const AdminDefinition = {
             url: 'compliance/custom_terms_of_service',
             title: t('admin.sidebar.customTermsOfService'),
             title_default: 'Custom Terms of Service (Beta)',
-            isHidden: it.isnt(it.licensedForFeature('CustomTermsOfService')),
+            // isHidden: it.isnt(it.licensedForFeature('CustomTermsOfService')),
             searchableStrings: [
                 'admin.support.termsOfServiceTitle',
                 'admin.support.enableTermsOfServiceTitle',
